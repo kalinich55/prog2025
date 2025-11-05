@@ -1,6 +1,7 @@
 #include "func.h"
 #include <cmath>
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
 const double EPS = 0.00001;
@@ -131,13 +132,8 @@ bool circleSquareCross(Circle c, Square s) {
         return true;
     }
 
-    double nearX = s.topLeft.x;
-    if (c.center.x > s.topLeft.x + s.side) nearX = s.topLeft.x + s.side;
-    else if (c.center.x > s.topLeft.x) nearX = c.center.x;
-    
-    double nearY = s.topLeft.y;
-    if (c.center.y < s.topLeft.y - s.side) nearY = s.topLeft.y - s.side;
-    else if (c.center.y < s.topLeft.y) nearY = c.center.y;
+    double nearX = max(s.topLeft.x, min(c.center.x, s.topLeft.x + s.side));
+    double nearY = max(s.topLeft.y - s.side, min(c.center.y, s.topLeft.y));
     
     double dx = c.center.x - nearX;
     double dy = c.center.y - nearY;
