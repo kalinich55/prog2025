@@ -1,0 +1,26 @@
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall -Wextra -O2
+TARGET = dynamic_array_demo
+SOURCES = main.cpp DynamicArray.cpp
+OBJECTS = $(SOURCES:.cpp=.o)
+
+all: $(TARGET)
+
+$(TARGET): $(OBJECTS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJECTS)
+
+main.o: main.cpp DynamicArray.h
+	$(CXX) $(CXXFLAGS) -c main.cpp -o main.o
+
+DynamicArray.o: DynamicArray.cpp DynamicArray.h
+	$(CXX) $(CXXFLAGS) -c DynamicArray.cpp -o DynamicArray.o
+
+run: $(TARGET)
+	./$(TARGET)
+
+clean:
+	rm -f $(OBJECTS) $(TARGET)
+
+rebuild: clean all
+
+.PHONY: all clean run rebuild
